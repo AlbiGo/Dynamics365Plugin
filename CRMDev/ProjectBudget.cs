@@ -53,14 +53,24 @@ namespace CRMDev
             {
                 Entity entity = (Entity)context.InputParameters["Target"];
                 string message = context.MessageName;
-                decimal projectBudget = (decimal)entity["new_projectbudget"]; //The Project Budget
 
                 try
                 {
 
                     if(message.Equals("Update"))
                     {
+                        decimal projectBudget = 0;
                         Entity preimage = context.PreEntityImages.Contains("Project") ? context.PreEntityImages["Project"] : null;
+                        if (entity.Contains("new_projectbudget"))
+                        {
+                             projectBudget = (decimal)entity["new_projectbudget"];
+                           
+                           
+                        }
+                        else if(preimage.Contains("new_projectbudget"))
+                        {
+                             projectBudget = (decimal)preimage["new_projectbudget"];
+                        }
                         var selection = (OptionSetValue)preimage["new_category"];
                         int selectedValue = selection.Value;
                         string category = "";
@@ -73,12 +83,14 @@ namespace CRMDev
                         }
 
 
+
                     }
                     else if(message.Equals("Create"))
                     {
                         // GET 
                         if(entity.Contains("new_category"))
                         {
+                            decimal projectBudget = (decimal)entity["new_projectbudget"]; //The Project Budget
                             var selection = (OptionSetValue)entity["new_category"];
                             int selectedValue = selection.Value;
                             string category = "";
