@@ -24,7 +24,7 @@ namespace CRMDev
                 {
                     Entity entity = (Entity)context.InputParameters["Target"];
                     var id = entity.Id;
-                    var project = helper.FindById(id, service);
+                    var project = helper.FindById(id, service , "lead");
                     SetStateRequest setStateRequest = new SetStateRequest()
                     {
                         EntityMoniker = new EntityReference

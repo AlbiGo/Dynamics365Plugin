@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="ChangeStatusPlugIn.cs" />
     <Compile Include="Helper.cs" />
+    <Compile Include="NotifyUser.cs" />
     <Compile Include="ProjectBudget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

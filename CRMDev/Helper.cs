@@ -27,10 +27,10 @@ namespace CRMDev
             return category;
         }
 
-        public Entity FindById(Guid entityID, IOrganizationService service)
+        public Entity FindById(Guid entityID, IOrganizationService service ,string entityName)
         {
             //var projectQuery = new QueryExpression("new_project") { ColumnSet = new ColumnSet(true) };//Select * from tbl_name
-            var project = service.Retrieve("lead", entityID, new ColumnSet(true));
+            var project = service.Retrieve(entityName, entityID, new ColumnSet(true));
             return project;
         }
     }
