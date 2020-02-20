@@ -1,4 +1,5 @@
-﻿using Microsoft.Xrm.Sdk;
+﻿using Microsoft.Crm.Sdk.Messages;
+using Microsoft.Xrm.Sdk;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,29 @@ namespace CRMDev
             Helper helper = new Helper();
             if (context.InputParameters.Contains("Target") && context.InputParameters["Target"] is Entity)
             {
+                try
+                {
+                    Entity entity = (Entity)context.InputParameters["Target"];
+                    var id = entity.Id;
+                    var project = helper.FindById(id, service);
+                    SetStateRequest setStateRequest = new SetStateRequest()
+                    {
+                        EntityMoniker = new EntityReference
+                        {
+                            Id = id,
+                            LogicalName = "lead",
+                        },
+                        State = new OptionSetValue(1),
+                        Status = new OptionSetValue(3)
+                    };
+                    service.Execute(setStateRequest);
+                    service.Update(entity);
 
+                }
+                catch (Exception ex)
+                {
+                    throw new InvalidPluginExecutionException(ex.Message);
+                }
             }
         }
     }

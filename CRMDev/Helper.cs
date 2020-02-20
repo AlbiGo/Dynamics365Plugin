@@ -26,5 +26,12 @@ namespace CRMDev
             Entity category = service.RetrieveMultiple(Account_query).Entities[0];
             return category;
         }
+
+        public Entity FindById(Guid entityID, IOrganizationService service)
+        {
+            //var projectQuery = new QueryExpression("new_project") { ColumnSet = new ColumnSet(true) };//Select * from tbl_name
+            var project = service.Retrieve("lead", entityID, new ColumnSet(true));
+            return project;
+        }
     }
 }
